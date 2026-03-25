@@ -26,7 +26,10 @@ type Props = {
 };
 
 export const ExpertCard = ({ expert }: Props) => {
-  const startingPrice = Math.min(...expert.pricings.map((p) => p.price));
+  const startingPrice =
+    expert.pricings.length > 0
+      ? Math.min(...expert.pricings.map((p) => p.price))
+      : undefined;
 
   return (
     <Card size="sm" className="h-full border border-border">
@@ -48,12 +51,14 @@ export const ExpertCard = ({ expert }: Props) => {
         </p>
       </CardContent>
       <CardFooter className="justify-between border-t border-border">
-        <span className="text-sm text-muted-foreground">
-          From{" "}
-          <span className="font-semibold text-foreground">
-            {formatPrice(startingPrice)}
+        {startingPrice ? (
+          <span className="text-sm text-muted-foreground">
+            From{" "}
+            <span className="font-semibold text-foreground">
+              {formatPrice(startingPrice)}
+            </span>
           </span>
-        </span>
+        ) : null}
         <Button size="sm">View profile</Button>
       </CardFooter>
     </Card>
